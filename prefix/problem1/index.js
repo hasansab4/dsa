@@ -59,7 +59,33 @@ Example Explanation:
 
 
 function rangeSum(A,B){
-    //Your code goes here
+    //Declare prefix sum variable
+    if(B.length === 0) return []
+    const prefixSum = []
+    //Initiaize first element
+    prefixSum[0] = A[0]; 
+
+    //get the prefix sum of rest of the array value
+    for(let i=1;i<A.length;i++){
+        prefixSum[i] = prefixSum[i-1] + A[i];
+    }
+
+    let querysum = 0;
+    let result = []
+    //loop over queries
+    for(let i=0;i<B.length;i++){
+        let l = B[i][0]
+        let r = B[i][1]
+
+        if(l>0)
+            querysum = prefixSum[r] - prefixSum[l-1];
+        else
+            querysum = prefixSum[r]
+
+        result.push(querysum)
+    }
+
+    return result;
 }
 
-rangeSum([1, 2, 3, 4, 5],[[0, 3], [1, 2]])
+module.exports = rangeSum;
